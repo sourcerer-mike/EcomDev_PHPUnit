@@ -1828,7 +1828,6 @@ abstract class EcomDev_PHPUnit_Test_Case_Controller extends EcomDev_PHPUnit_Test
 
         $this->getLayout()->reset();
         $this->getResponse()->reset();
-        $this->app()->resetRegistry(); // so e.g. "current_product" won't persist and throw errors
 
         $this->app()->getFrontController()->dispatch();
 
