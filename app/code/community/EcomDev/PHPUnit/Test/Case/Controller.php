@@ -1826,6 +1826,13 @@ abstract class EcomDev_PHPUnit_Test_Case_Controller extends EcomDev_PHPUnit_Test
             );
         }
 
+        // workaround for notifications (in backend)
+        /** @var Mage_Index_Model_Resource_Process_Collection $processesCollection */
+        $processesCollection = Mage::getSingleton('index/indexer')->getProcessesCollection();
+        $part = $processesCollection->getSelect()->getPart(Zend_Db_Select::FROM);
+        if (isset($part['e'])) unset($part['e']); // prevents errors
+        $processesCollection->getSelect()->setPart(Zend_Db_Select::FROM, $part);
+
         $this->getLayout()->reset();
         $this->getResponse()->reset();
 
