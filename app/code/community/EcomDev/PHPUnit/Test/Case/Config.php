@@ -1744,12 +1744,14 @@ abstract class EcomDev_PHPUnit_Test_Case_Config extends EcomDev_PHPUnit_Test_Cas
             );
         }
 
-        if (array() == ($nodeValue = $menuNode->xpath($node . '/action')))
+        /** @var Varien_Simplexml_Element $simpleXMLElement */
+        $simpleXMLElement = current($menuNode->xpath($node . '/action/text()'));
+        $route = (string) $simpleXMLElement;
+        if (!$route)
         { // empty: menu not found
-            self::fail(sprintf('Adminhtml menu %s could not be found.', $node));
+            self::fail(sprintf('Action for adminhtml menu %s could not be found.', $node));
         }
 
-        $route = (string) $nodeValue[0];
 
         // fetch module, controller and action if given
         $routeSet   = explode('/', $route);
